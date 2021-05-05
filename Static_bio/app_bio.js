@@ -1,24 +1,21 @@
 
 let idSelect = d3.select("#selDataset");
 let demographicsTable = d3.select("#sample-metadata");
-
 // select the bar chart div
 let barChart = d3.select("#bar");
 
-// select the bubble chart div
-var bubbleChart = d3.select("bubble");
+let bubbleChart = d3.select("bubble");
 
-// create a function to initially populate dropdown menu with IDs and draw charts by default (using the first ID)
+
 function init() {
 
-    // reset any previous data
+    
     resetData();
 
     // read in samples from JSON file
     d3.json("samples.json").then((data => {
 
 
-        //  use a forEach to loop over each name in the array data.names to populate dropdowns with IDs
         data.names.forEach((name => {
             let option = idSelect.append("option");
             option.text(name);
@@ -44,15 +41,11 @@ function resetData() {
     gaugeChart.html("");
 
 };
-// create a function to read JSON and plot charts
 function plotCharts(id) {
 
-    // read in the JSON data
     d3.json("samples.json").then((data => {
 
      
-
-        // filter the metadata for the ID chosen
         var individualMetadata = data.metadata.filter(participant => participant.id == id)[0];
 
         // Iterate through each key and value in the metadata
@@ -61,10 +54,8 @@ function plotCharts(id) {
             var newList = demographicsTable.append("ul");
             newList.attr("class", "list-group list-group-flush");
 
-            // append a li item to the unordered list tag
             var listItem = newList.append("li");
 
-            // change the class attributes of the list item for styling
             listItem.attr("class", "list-group-item p-1 demo-text bg-transparent");
 
             // add the key value pair from the metadata to the demographics list
@@ -74,7 +65,7 @@ function plotCharts(id) {
 
        
 
-        // filter the samples for the ID chosen
+        
         var individualSample = data.samples.filter(sample => sample.id == id)[0];
 
         // create empty arrays to store sample data
@@ -126,10 +117,8 @@ function plotCharts(id) {
             }
         };
 
-        // create the data array for plotting
         var dataBar = [traceBar];
 
-        // define the plot layout
         var layoutBar = {
             height: 500,
             width: 600,
